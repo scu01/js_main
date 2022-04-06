@@ -63,7 +63,7 @@ const $nav_menu = document.getElementById("nav_menu"), // Menu container (nav)
 
 // Sets attributes of every a in menu
 $template_menu.querySelectorAll("li a").forEach((a, i) => {
-  a.setAttribute("href", "pruebas.html");
+  a.setAttribute("href", "index.html");
   a.textContent = `Section ${i + 1}`;
 });
 
@@ -74,7 +74,7 @@ $nav_menu.append($fragment_menu); // Appends fragment to nav (DOM)
 // <--- Cards --->
 
 const json_cards = // json data for cards
-    '[{"title":"Tech","src":"http://placeimg.com/1000/1000/tech"},{"title":"Nature","src":"http://placeimg.com/1000/1000/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/1000/arch"},{"title":"Animals","src":"http://placeimg.com/1000/1000/animals"},{"title":"Tech","src":"http://placeimg.com/1000/1000/tech"},{"title":"Nature","src":"http://placeimg.com/1000/1000/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/1000/arch"},{"title":"Animals","src":"http://placeimg.com/1000/1000/animals"},{"title":"Tech","src":"http://placeimg.com/1000/1000/tech"},{"title":"Nature","src":"http://placeimg.com/1000/1000/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/1000/arch"},{"title":"Animals","src":"http://placeimg.com/1000/1000/animals"}]',
+    '[{"title":"Tech","src":"http://placeimg.com/1000/700/tech"},{"title":"Nature","src":"http://placeimg.com/1000/700/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/700/arch"},{"title":"Animals","src":"http://placeimg.com/1000/700/animals"},{"title":"Tech","src":"http://placeimg.com/1000/700/tech"},{"title":"Nature","src":"http://placeimg.com/1000/700/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/700/arch"},{"title":"Animals","src":"http://placeimg.com/1000/700/animals"},{"title":"Tech","src":"http://placeimg.com/1000/700/tech"},{"title":"Nature","src":"http://placeimg.com/1000/700/nature"},{"title":"Architecture","src":"http://placeimg.com/1000/700/arch"},{"title":"Animals","src":"http://placeimg.com/1000/700/animals"}]',
   card_array = JSON.parse(json_cards); // json_cards array
 
 const $cards = document.querySelector(".cards"), // Cards container (div)
@@ -84,9 +84,21 @@ const $cards = document.querySelector(".cards"), // Cards container (div)
 
 // Creates an img viewer
 const view_img = (e) => {
-  $view_img.querySelector("img").setAttribute("alt", e.target.alt);
-  $view_img.querySelector("img").setAttribute("src", e.target.src);
-  $view_img.querySelector("figcaption").textContent = e.target.alt;
+  if (e.target.hasAttribute("src")) {
+    // If e.target is 'img'
+    $view_img.querySelector("img").setAttribute("alt", e.target.alt);
+    $view_img.querySelector("img").setAttribute("src", e.target.src);
+    $view_img.querySelector("figcaption").textContent = e.target.alt;
+  } else {
+    // If e.target is 'figcaption'
+    $view_img
+      .querySelector("img")
+      .setAttribute("alt", e.target.previousElementSibling.getAttribute("alt"));
+    $view_img
+      .querySelector("img")
+      .setAttribute("src", e.target.previousElementSibling.getAttribute("src"));
+    $view_img.querySelector("figcaption").textContent = e.target.textContent;
+  }
 
   $view_img.style.display = "flex"; // Makes img container visible
   $view_img.addEventListener("click", () => ($view_img.style.display = "none")); // Adds click event to img container to hide it
