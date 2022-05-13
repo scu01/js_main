@@ -12,6 +12,10 @@ export default function theme(btn) {
     elements.forEach(e => {
       if (e.matches("body")) e.classList.remove("dark_body");
       if (e.matches("header")) e.classList.remove("dark_header");
+      if (e.matches("aside")) e.classList.remove("dark_aside");
+      if (e.matches(".menu")) e.classList.remove("dark_menu");
+      if (e.matches("input[type='text']") || e.matches("input[type='email']") || e.matches("input[type='search']") || e.matches("textarea")) e.classList.remove("dark_input");
+      if (e.matches("button") || e.matches("input[type='submit']") || e.matches("select")) e.classList.remove("dark_btn");
       if (e.matches(".card")) e.classList.remove("dark_card");
     });
   }
@@ -22,6 +26,10 @@ export default function theme(btn) {
     elements.forEach(e => {
       if (e.matches("body")) e.classList.add("dark_body");
       if (e.matches("header")) e.classList.add("dark_header");
+      if (e.matches("aside")) e.classList.add("dark_aside");
+      if (e.matches(".menu")) e.classList.add("dark_menu");
+      if (e.matches("input[type='text']") || e.matches("input[type='email']") || e.matches("input[type='search']") || e.matches("textarea")) e.classList.add("dark_input");
+      if (e.matches("button") || e.matches("input[type='submit']") || e.matches("select")) e.classList.add("dark_btn");
       if (e.matches(".card")) e.classList.add("dark_card");
     });
   }

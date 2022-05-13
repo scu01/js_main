@@ -18,6 +18,8 @@
 
   <b class="off_on"></b>
 
+  <div id="menu" class="menu" data-theme></div>
+
   <header data-theme>
     <h1>DOM HANDLE</h1>
   </header>
@@ -32,15 +34,14 @@
     <section id="section_1" class="sec">
       <h2>Clock</h2>
       <b id="clock">00:00:00</b><br>
-      <button id="clock_on" class="btn">Clock On</button>
-      <button id="clock_off" class="btn" disabled>Clock Off</button>
+      <button id="clock_on" class="btn" data-theme="">Clock On</button>
+      <button id="clock_off" class="btn" disabled data-theme="">Clock Off</button>
     </section>
-
     <section id="section_2" class="sec">
       <h2>Responsive JS</h2>
       <div id="responsive"></div>
     </section>
-
+ 
     <section id="section_3" class="sec">
       <h2>Geolocation</h2>
       <div id="geolocation"></div>
@@ -49,39 +50,83 @@
     <section id="section_4" class="sec">
       <h2>Search Filter</h2>
       <div id="search_div">
-        <input type="search" placeholder="Search..." id="search_bar">
-        <input type="submit" value="Search" id="search_btn" class="btn">
+        <input type="search" placeholder="Search..." id="search_bar" class="input" data-theme>
       </div>
       <article class="cards">
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/nature" alt="Nature">
-          <figcaption>Nature</figcaption>
-        </figure>
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/tech" alt="Tech">
-          <figcaption>Tech</figcaption>
-        </figure>
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/animals" alt="Animals">
-          <figcaption>Animals</figcaption>
-        </figure>
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/arch" alt="Architecture">
-          <figcaption>Architecture</figcaption>
-        </figure>
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/people" alt="People">
-          <figcaption>People</figcaption>
-        </figure>
-        <figure class="card" data-theme>
-          <img src="http://placeimg.com/200/200/any" alt="Any">
-          <figcaption>Any</figcaption>
-        </figure>
+        <div>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/nature" alt="Nature">
+            <figcaption>Nature</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/tech" alt="Tech">
+            <figcaption>Tech</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/animals" alt="Animals">
+            <figcaption>Animals</figcaption>
+          </figure>
+        </div>
+        <div>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/arch" alt="Architecture">
+            <figcaption>Architecture</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/people" alt="People">
+            <figcaption>People</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/any" alt="Any">
+            <figcaption>Any</figcaption>
+          </figure>
+        </div>
+        <div>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/nature" alt="Nature">
+            <figcaption>Nature</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/tech" alt="Tech">
+            <figcaption>Tech</figcaption>
+          </figure>
+          <figure class="card" data-theme>
+            <img src="http://placeimg.com/200/200/animals" alt="Animals">
+            <figcaption>Animals</figcaption>
+          </figure>
+        </div>
       </article>
       <h3 id="not_found">Card not found</h3>
     </section>
 
+    <section id="section_5" class="sec">
+      <h2>Smart Video</h2>
+      <h3>This video is paused when not visible or when user switch tab</h3>
+      <video id="video" src="/assets/aerialview.mp4" muted controls loop data-smart-video></video>
+    </section>
+
+    <section id="section_6" class="sec">
+      <h2>Form Validations HTML5</h2>
+      <form action="https://formsubmit.co/08f2488a4222fc9d412a0d71590ef21e" method="POST" class="contact_form">
+        <input type="text" name="name" class="input" placeholder="Name..." pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" title="Only letters and spaces" required data-theme>
+        <input type="email" name="email" class="input" placeholder="Email..." pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" title="git@hub.com" required data-theme>
+        <textarea name="comment" id="" cols="50" rows="5" class="textarea" placeholder="Comment..." required data-theme></textarea>
+        <input type="submit" class="btn" value="Send" data-theme>
+      </form>
+    </section>
+
+    <section id="section_7" class="sec">
+      <h2>Voice Speech</h2>
+      <select id="speech_select" class="select" data-theme>
+        <option value="">Choose a voice...</option>
+      </select>
+      <textarea id="speech_text" cols="50" rows="5" class="textarea" placeholder="Write something..." data-theme></textarea>
+      <button id="speech_btn" class="btn" data-theme>Speach</button>
+    </section>
+
   </main>
+
+  <aside data-theme></aside>
 
   <script src="dom.js" type="module"></script>
 
