@@ -1,5 +1,4 @@
 // ----------------------------------------------------------------------------------------------- //
-$(() => {}); // $(document).ready(() =>{});
 ((d,w,c) => {})(document,window,console); // Funcion que se autoejecuta
 // ----------------------------------------------------------------------------------------------- //
 {  'Variables'
@@ -753,6 +752,8 @@ $(() => {}); // $(document).ready(() =>{});
 
     {  'Eventos'
 
+        // keypress, load, resize, scroll, click, dbclick, focus, hover, DOMContentLoaded (mas rapido para cargar contenido al INSTANTE)
+
         console.info(event); // Muestra todas las propiedades del evento
         event.type; // Devuelve el evento
         event.target; // Devuelve el elemento que desencadena el evento
@@ -760,11 +761,81 @@ $(() => {}); // $(document).ready(() =>{});
         // Evento semantico (solo puede ejecutar una funcion por evento)
         $input.onclick = e => alert(e); // A las funciones de los eventos solo se les puede pasar un solo parametro que es el evento en si (e) | A menos que se use addEventListener() con una funcion flecha
  
-        const alertar = e => alert(e);
+        const alertar = e => {
+            alert(e);
+            e.stopPropagation(); // El evento solo se ejecuta para el elemento seleccionado
+        };
         $input.addEventListener("click",alertar); // Pueden ejecutar varias funciones por evento
+        $input.addEventListener("click",alertar,{
+            capture: true, // Este parametro sirve para cuando se hace click a un elemento dentro de otro y ambos tienen un evento, con capture true los eventos se ejecutan de afuera hacia adentro
+            once: true, // Con este parametro el evento solo se ejecuta una vez
+        });
+
         $input.removeEventListener("click",alertar); // Para remover un evento, la funcion que se ejecuta tiene que estar dentro de una variable
+
+        $a.addEventListener("click", (e) => {
+            e.preventDefault(); // Cancela el comportamiento por defecto del evento
+            alert("el enlace ya no funciona");
+        });
+
+        document.addEventListener("click", (e) => { // Forma mas optima de agregar evento a varios elementos
+            if (e.target.matches("div")) console.info("Este es un div");
+        });
+
+        document.addEventListener("keypress",e => {
+            if (e.key === "a" && e.altKey) console.log("Presionaste alt + a");
+        });
 
     }
 
+    {  'BOM'
+
+        // Objeto window
+
+        innerWidth; // vw
+        innerHeight; // vh
+        outerWidth; // El ancho total del viewport y la ventana del navegador
+        outerHeight; // El alto total del viewport y la ventana del navegador
+        scrollX; // Lo alejada que esta la barra scroll de x (px)
+        scrollY; // Lo alejada que esta la barra scroll de y (px)
+        screenX; // La coordenada x de la pantalla en la que se dibuja el navegador (toma en cuenta las pantallas secundarias)
+        screenY; // La coordenada y de la pantalla en la que se dibuja el navegador (toma en cuenta las pantallas secundarias)
+
+        history; // Devuelve un historial de nuestro sitio web (a cuantas paginas se accedio, logintud, etc)
+        history.back(1); // Va 1 pagina hacia atras
+        history.forward(1); // Va 1 pagina hacia adelante
+        history.go(-1); // Hacia adelante o atras
+
+        navigator.onLine; // Detecta si el usuario tiene conexion o no
+        navigator.geolocation; // Geolocalizacion
+        navigator.mediaDevices; // Camara y microfono
+        ServiceWorker; // Sirve para convertir una pagina web a una aplicacion de escritorio
+        navigator.storage; // Web storage y local storage
+        navigator.userAgent; // Nos devuelve informacion importante sobre el equipo, el navegador, etc
+
+        // Objeto location
+
+        location.origin; // Devuelve la ruta de origen (http://www.google.com/) hasta la tercer /
+        location.protocol; // Devuelve el protocolo (http, https, file)
+        location.hostname; // Devuelve el dominio y puerto (puerto por defecto 80 (""))
+        location.host; // Devuelve el dominio
+        location.port; // Devuelve el puerto
+        location.href; // Devuelve toda la url
+        location.hash; // Devuelve lo que haya despues de un #
+        location.pathname; // Lo que hay entre medio de / / (el archivo o seccion de la pagina que estas visitando)
+        location.search; // Almacena todo lo que venga despues de un ? (datos de formulario)
+        location.reload(); // Recarga la pagina
+
+    }
+
+    const mq = window.matchMedia("(min-width: 1024px)");
+    mq.addEventListener("change" ,e => alert("width: 1024px"));
+
 }
 // ----------------------------------------------------------------------------------------------- //
+{  'Local Storage'
+
+    localStorage.setItem("theme","dark"); // Define una variable
+    localStorage.getItem("theme"); // Obtiene el valor de una variable
+
+}
