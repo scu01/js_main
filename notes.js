@@ -643,13 +643,6 @@
 
 }
 // ----------------------------------------------------------------------------------------------- //
-{  'Web APIS'
-
-    const hablar = texto => speechSynthesis.speak(new SpeechSynthesisUtterance(texto));
-    hablar("Hola");
-
-}
-// ----------------------------------------------------------------------------------------------- //
 {  'DOM'
 
     // Document Object Model representa todo el documento hmtl y sus etiquetas
@@ -837,5 +830,14 @@
 
     localStorage.setItem("theme","dark"); // Define una variable
     localStorage.getItem("theme"); // Obtiene el valor de una variable
+
+}
+
+{  'AJAX'
+
+    const xhr = new XMLHttpRequest();
+    
+    xhr.readyState; // 5 estados
+    xhr.status; // Devuelve el codigo de estado (200, 404, 502, etc)
 
 }

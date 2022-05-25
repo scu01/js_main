@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CRUD AJAX</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      font-family: monospace;
+    }
+    body {
+      margin: 0;
+      background-color: #999;
+    }
+    header {
+      margin: 0;
+      position: sticky;
+      top: 0;
+      padding: 5px;
+      width: 100%;
+      background-color: #636363;
+      text-align: center;
+      box-shadow: 0 2.5px 2.5px #000000;
+    }
+    header h1 {
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      padding: 10px 0 0 10px;
+    }
+    b {
+      color: #8a2be2;
+    }
+    h2 {
+      padding: 5px;
+      background-color: #636363;
+      border: 0;
+      border-radius: 5px;
+      box-shadow: 0 2.5px 2.5px #000000;
+    }
+    section {
+      display: flex;
+      height: calc(100vh - 81px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    input, button{
+      padding: 5px;
+      border: 0;
+      border-radius: 5px;
+      outline: 0;
+      box-shadow: 0 2.5px 2.5px #787878b6;
+    }
+    table {
+      text-align: center;
+      background-color: #e2ae6a;
+      box-shadow: 1px 1px 2.5px #787878b6, -1px -1px 2.5px #787878b6;
+    }
+    table th {
+      padding: 10px;
+      background-color: #ff7b00;
+    }
+    table td {
+      padding: 10px;
+      background-color: #aaa;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header><h1>CRUD AJAX</h1></header>
+
+  <p>To test this CRUD API you have to install json-server <b>npm install -g json-server</b> and run <b>json-server -w -p 5555 crud/db.json</b></p>
+
+  <section class="crud">
+    <article>
+      <h2 class="crud_title">Add Movie</h2>
+      <form class="crud_form">
+        <input type="text" name="name" placeholder="Name" required> <br>
+        <input type="text" name="gender" placeholder="Gender" required> <br>
+        <input type="submit" value="Add Movie"> <br>
+        <input type="hidden" name="id">
+      </form>
+    </article>
+    <article>
+      <h2>Movies</h2>
+      <table class="crud_table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </article>
+  </section>
+
+  <template id="crud_template">
+    <tr>
+      <td class="name"></td>
+      <td class="gender"></td>
+      <td>
+        <button class="edit">Edit</button>
+        <button class="delete">Delete</button>
+      </td>
+    </tr>
+  </template>
+
+  <script>
+
+    const d = document, $title = d.getElementById("crud_title"), $form = d.querySelector(".crud_form"),
+      $table = d.querySelector(".crud_table"), $template = d.getElementById("crud_template").content, 
+      $fragment = d.createDocumentFragment();
+
+    const ajax = options => {
+      let {method, url, success, error, data} = options;
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener("readystatechange", () => {
+        if (xhr.readyState !== 4) return;
+        if (xhr.status >= 200 && xhr.status < 300) {
+          let json = JSON.parse(xhr.responseText);
+          success(json);
+        } else error(`Error ${xhr.status}: ${xhr.statusText || "An error has ocurred"}`);
+      });
+      xhr.open(method || "GET", url);
+      xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+      xhr.send(JSON.stringify(data));
+    }
+
+    const getMovies = () => { // GET
+      ajax({
+        url: "http://localhost:5555/movies",
+        success: (movies) => {
+          movies.forEach(movie => {
+            $template.querySelector(".name").textContent = movie.name;
+            $template.querySelector(".gender").textContent = movie.gender
+            $template.querySelector(".edit").dataset.id = movie.id;
+            $template.querySelector(".edit").dataset.name = movie.name;
+            $template.querySelector(".edit").dataset.gender = movie.gender;
+            $template.querySelector(".delete").dataset.id = movie.id;
+            let $clone = d.importNode($template, true);
+            $fragment.append($clone);
+          });
+          $table.querySelector("tbody").append($fragment);
+        },
+        error: (e) => $table.insertAdjacentHTML("afterend", `<b>${e}</b>`)
+      });
+    }
+
+    d.addEventListener("DOMContentLoaded", getMovies);
+
+    d.addEventListener("click", e => {
+      if (e.target.matches(".edit")) {
+        $form.name.value = e.target.dataset.name; $form.name.focus();
+        $form.gender.value = e.target.dataset.gender;
+        $form.id.value = e.target.dataset.id;
+      }
+      if (e.target.matches(".delete")) { // DELETE
+        if (confirm(`¿Sure you wanna delete "${e.target.previousElementSibling.dataset.name}"?`)) {
+          ajax({
+            method: "DELETE",
+            url: `http://localhost:5555/movies/${e.target.dataset.id}`,
+            success: () => location.reload(),
+            error: (e) => $table.insertAdjacentHTML("afterend", `<b>${e}</b>`)
+          });
+        }
+      }
+    });
+
+    d.addEventListener("submit", e => {
+      if (e.target === $form) {
+        e.preventDefault();
+        if (!e.target.id.value) { // POST
+          ajax({
+            method: "POST",
+            url: "http://localhost:5555/movies",
+            success: () => location.reload(),
+            error: (e) => $form.insertAdjacentHTML("afterend", `<b>${e}</b>`),
+            data: {
+              name: e.target.name.value,
+              gender: e.target.gender.value
+            }
+          })
+        } else { // PUT
+          ajax({
+            method: "PUT",
+            url: `http://localhost:5555/movies/${e.target.id.value}`,
+            success: () => location.reload(),
+            error: (e) => $form.insertAdjacentHTML("afterend", `<b>${e}</b>`),
+            data: {
+              name: e.target.name.value,
+              gender: e.target.gender.value
+            }
+          });
+        }
+      }
+    });
+
+  </script>
+
+</body>
+
+</html>

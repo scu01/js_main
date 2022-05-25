@@ -1,0 +1,19 @@
+{
+  "movies": [
+    {
+      "name": "The Batman",
+      "gender": "Mistery - Action",
+      "id": 2
+    },
+    {
+      "name": "Baby Driver",
+      "gender": "Action",
+      "id": 3
+    },
+    {
+      "name": "Avengers Endgame",
+      "gender": "Superheroes",
+      "id": 4
+    }
+  ]
+}
