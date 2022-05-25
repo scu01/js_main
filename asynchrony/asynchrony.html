@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined" />
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <header><h1>Asynchrony</h1></header>
+
+    <main>
+
+      <section class="sec">
+        
+        <div class="sec_h2">
+          <h2>Users Info From <a href="https://jsonplaceholder.typicode.com/users" target="_blank">JSON Placeholder</a></h2>
+        </div>
+
+        <div class="sec">
+          <div class="sec_h3">
+            <h3>Ajax</h3>
+            <div>
+              <button id="getAjax" class="btn">GET</button>
+              <button id="clearAjax" class="btn" disabled>CLEAR</button>
+            </div>
+          </div>
+          <ol id="xhr"></ol>
+        </div>
+
+        <div class="sec">
+          <div class="sec_h3">
+            <h3>Fetch</h3>
+            <div>
+              <button id="getFetch" class="btn">GET</button>
+              <button id="clearFetch" class="btn" disabled>CLEAR</button>
+            </div>
+          </div>
+          <ol id="fetch"></ol>
+        </div>
+
+        <div class="sec">
+          <div class="sec_h3">
+            <h3>Fetch Async</h3>
+            <div>
+              <button id="getAsync" class="btn">GET</button>
+              <button id="clearAsync" class="btn" disabled>CLEAR</button>
+            </div>
+          </div>
+          <ol id="async"></ol>
+        </div>
+
+        <div class="sec">
+          <div class="sec_h3">
+            <h3>Axios</h3>
+            <div>
+              <button id="getAxios" class="btn">GET</button>
+              <button id="clearAxios" class="btn" disabled>CLEAR</button>
+            </div>
+          </div>
+          <ol id="axios"></ol>
+        </div>
+
+        <div class="sec">
+          <div class="sec_h3">
+            <h3>Axios Async</h3>
+            <div>
+              <button id="getAxiosAsync" class="btn">GET</button>
+              <button id="clearAxiosAsync" class="btn" disabled>CLEAR</button>
+            </div>
+          </div>
+          <ol id="axiosAsync"></ol>
+        </div>
+
+      </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="index.js" type="module"></script>
+
+  </body>
+</html>
